@@ -49,7 +49,7 @@ class Threadpool extends Thread implements Runnable
             {
 
                 connection_class obj = Server.queue_poll();
-                if (obj!=null && !obj.socket.isClosed())
+                if (obj!=null)
                 {
                 //try { 
                     
@@ -60,10 +60,6 @@ class Threadpool extends Thread implements Runnable
                 Server.queue_add(obj);  
                 System.out.println("Thread ID: "+getId());
                 //} catch (IOException ex) {     System.out.println("issue with writng code ??");       }
-                }
-                else if (obj.socket.isClosed())
-                {
-                    
                 }
                 
             }
