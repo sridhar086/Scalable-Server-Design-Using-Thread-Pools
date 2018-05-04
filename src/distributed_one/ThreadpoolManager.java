@@ -61,6 +61,11 @@ class Threadpool extends Thread implements Runnable
                 System.out.println("Thread ID: "+getId());
                 //} catch (IOException ex) {     System.out.println("issue with writng code ??");       }
                 }
+                else if (obj.socket.isClosed())
+                {
+                    
+                }
+                
             }
         
                 
