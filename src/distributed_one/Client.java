@@ -89,7 +89,7 @@ class Client {
             //System.out.println("read the data from server"+hashcode+" the original is "+orig_hashcodes);
             if (orig_hashcodes.equalsIgnoreCase(hashcode))
             {
-                System.out.println("Hashcodes matches for "+client_name);
+                //System.out.println("Hashcodes matches for "+client_name);
                 //System.out.println("hashcodes matches "+hashcode+" "+orig_hashcodes);
             }
             Thread.sleep(1000/message_rate);

@@ -22,17 +22,19 @@ import java.net.Socket;
         public DataInputStream din;
         public DataOutputStream dout;
         public Socket socket;
+        public int clientid;
         //public PrintWriter out;
         
         
-        connection_class(Socket soc)
+        connection_class(Socket soc,int clientid)
         {
             try {
-                din  = new DataInputStream((soc.getInputStream()));
+                this.din  = new DataInputStream((soc.getInputStream()));
                 //out = new PrintWriter(soc.getOutputStream(), true);
 
-                dout = new DataOutputStream(soc.getOutputStream());
-                socket = soc;
+                this.dout = new DataOutputStream(soc.getOutputStream());
+                this.socket = soc;
+                this.clientid = clientid;
             } catch (IOException ex) {
                 
             }

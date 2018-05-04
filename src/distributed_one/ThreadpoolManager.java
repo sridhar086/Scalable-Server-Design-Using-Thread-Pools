@@ -19,6 +19,8 @@ import java.util.LinkedList;
 class Threadpool extends Thread implements Runnable
 {
     volatile boolean full_shutdown = false;
+    private final Object lock = new Object();
+    
     
     static synchronized String SHA1FromBytes(byte  [] data) {
         
@@ -58,9 +60,11 @@ class Threadpool extends Thread implements Runnable
                 obj.din.read(b);
                 obj.dout.writeUTF(Threadpool.SHA1FromBytes(b));
                 Server.queue_add(obj);  
-                System.out.println("Thread ID: "+getId());
+                //System.out.println("Processed by Thread ID: "+getId()+" for Client ID: "+obj.clientid);
+                Server.update_params(0,obj.clientid);
                 //} catch (IOException ex) {     System.out.println("issue with writng code ??");       }
                 }
+                
                 
             }
         
