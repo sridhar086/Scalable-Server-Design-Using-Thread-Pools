@@ -20,7 +20,6 @@ import java.util.logging.Logger;
  * @author sridhar
  */
 public class TaskManager {
-    static volatile int count = 0;
 
     static synchronized String SHA1FromBytes(byte  [] data) {
         
@@ -38,33 +37,31 @@ public class TaskManager {
  
     
     
-    static synchronized boolean todo() 
+    static synchronized  boolean todo() 
     {
         
         connection_class obj = Server.queue_poll();
-        //DataInputStream din =  null;
-        //DataOutputStream dout = null;
-        //System.out.println("got a socket from  queue polling");
         if (obj!=null)
         {
-            try {  
-                //System.out.println("got a socket from  queue polling");
-
+            try { 
                 byte[] b = new byte[8];
-                //System.out.println("Trying to read data from client");
+                obj.din.read(b);
+                obj.dout.writeUTF(SHA1FromBytes(b));
+                /*
                 while(true)
                 {
-                int a = obj.din.read(b);
+                int a = 
                 //System.out.println("boooooooooooooooooooom the length is "+a);
                 if(a == 8)
                 {break;}
-                }
+                }*/
+                
                 //Server.print_bytes(b);
                 //System.out.println("sha 1 "+SHA1FromBytes(b));
                 //byte[] output_hashcode = SHA1FromBytes(b).getBytes();
                 //System.out.println("length of valid hashcode is "+output_hashcode.length);
                 //obj.dout.write(output_hashcode);
-                obj.dout.writeUTF(SHA1FromBytes(b));
+                
                 //obj.out.print(SHA1FromBytes(b));
                 //System.out.println("returned a valid hashcode");
                 //zdin.close();

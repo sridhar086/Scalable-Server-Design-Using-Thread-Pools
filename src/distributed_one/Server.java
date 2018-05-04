@@ -43,7 +43,7 @@ class Server {
     
 
     
-    public static connection_class queue_poll()
+    public synchronized static connection_class queue_poll()
     {
         
         
@@ -72,7 +72,7 @@ class Server {
         }
     }
     
-    public static void queue_add(connection_class con)
+    public synchronized static void queue_add(connection_class con)
     {
         
         socket_queue.add(con);
@@ -205,7 +205,7 @@ class Server {
             System.out.println(val);
         }
         System.out.println(uniqueValues.size());
-        System.out.println(TaskManager.count);
+        
         
     }
     

@@ -5,24 +5,39 @@
  */
 package distributed_one;
 
+import static distributed_one.TaskManager.SHA1FromBytes;
+import java.io.IOException;
+import java.math.BigInteger;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.util.LinkedList;
 
 /**
  *
  * @author sridhar
  */
-
-
-class Threadpool implements Runnable
+class Threadpool extends Thread implements Runnable
 {
     volatile boolean full_shutdown = false;
-    private int threadid;
+    
+    static synchronized String SHA1FromBytes(byte  [] data) {
+        
+    MessageDigest digest = null; 
+    try {
+            digest = MessageDigest.getInstance("SHA1");
+        } catch (NoSuchAlgorithmException ex) { System.out.println("No such algorithm exception "+ex);
+            
+        }
+    byte[] hash  = digest.digest(data);
+    BigInteger hashInt = new   BigInteger(1, hash);
+    return  hashInt.toString(16); 
+    
+    }
+    
     
     Threadpool(int threadid)
     {
-        threadid = threadid;
-        System.out.println("created a thread with thread ID: "+threadid);
-        
+        System.out.println("Created thread with Thread ID: "+getId());       
     }
     
 
@@ -32,17 +47,32 @@ class Threadpool implements Runnable
         {
             while(!full_shutdown)
             {
+
+                connection_class obj = Server.queue_poll();
+                if (obj!=null && !obj.socket.isClosed())
+                {
+                //try { 
+                    
                 
-                //System.out.println("Threads are running");
-                boolean soc_value = TaskManager.todo();
-                if (soc_value != false){
-                System.out.println("processed by thread ID: "+this.threadid);
+                byte[] b = new byte[8];
+                obj.din.read(b);
+                obj.dout.writeUTF(Threadpool.SHA1FromBytes(b));
+                Server.queue_add(obj);  
+                System.out.println("Thread ID: "+getId());
+                //} catch (IOException ex) {     System.out.println("issue with writng code ??");       }
                 }
+            }
+        
+                
+                //boolean soc_value = TaskManager.todo();
+                /*if (soc_value != false){
+                System.out.println("Thread ID: "+getId());
+                }*/
                 
                 
             }
         
-        }catch(Exception e)
+        catch(Exception e)
         {
             System.out.println("Polling concept is wrong because it exits out of the loop"+e.toString());
         }
@@ -58,6 +88,9 @@ class Threadpool implements Runnable
 
 public class ThreadpoolManager {
     
+    
+    
+    
         private volatile int THREADPOOLCOUNT;
     protected LinkedList<Thread> runnable_queue = new LinkedList<Thread>();
     
@@ -69,6 +102,7 @@ public class ThreadpoolManager {
             //System.out.println("Creating threadpools");
             Thread th = new Thread(new Threadpool(i));
             th.start();
+            
             runnable_queue.add(th);
         }
         

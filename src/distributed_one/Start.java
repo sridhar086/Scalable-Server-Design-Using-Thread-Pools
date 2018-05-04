@@ -55,8 +55,18 @@ public class Start {
             }
         }).start();
         
-                
         
+        new Thread(new Runnable() {
+
+            @Override
+            public void run() {
+                                Client e = new Client();
+                e.start_client("client3");
+                //Client.start_client("client2");
+                
+            }
+        }).start();
+           
         
     }
     
