@@ -5,7 +5,6 @@
  */
 package distributed_one;
 
-import static distributed_one.TaskManager.SHA1FromBytes;
 import java.io.IOException;
 import java.math.BigInteger;
 import java.security.MessageDigest;
@@ -53,28 +52,18 @@ class Threadpool extends Thread implements Runnable
                 connection_class obj = Server.queue_poll();
                 if (obj!=null)
                 {
-                //try { 
-                    
-                
                 byte[] b = new byte[8];
                 obj.din.read(b);
                 obj.dout.writeUTF(Threadpool.SHA1FromBytes(b));
                 Server.queue_add(obj);  
                 //System.out.println("Processed by Thread ID: "+getId()+" for Client ID: "+obj.clientid);
                 Server.update_params(0,obj.clientid);
-                //} catch (IOException ex) {     System.out.println("issue with writng code ??");       }
+                
                 }
                 
                 
             }
-        
-                
-                //boolean soc_value = TaskManager.todo();
-                /*if (soc_value != false){
-                System.out.println("Thread ID: "+getId());
-                }*/
-                
-                
+
             }
         
         catch(Exception e)

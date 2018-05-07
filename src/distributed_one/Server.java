@@ -70,6 +70,8 @@ class Server {
     public static double MessagesProcessedHistory = 0;
     public static Hashtable<Integer,Double> ClientMessagesHistory;
     
+    public static int NoClients = 0;
+    
     //variables for performance evaluation - END
 
     //Socket initializations
@@ -174,7 +176,7 @@ class Server {
            
            
            System.out.println(d +" Server Throughput:"+MessagesProcessed/seconds+" messages/s"
-                   +" Active Client Connections:"+Server.socket_queue.size()
+                   +" Active Client Connections:"+NoClients
                    +" Mean per-client throughput:"+Mean+" messages/s"
                    +" Std Dev. per-client throughput:"+SD+" messages/s");
            
@@ -293,26 +295,8 @@ class Server {
                 
                 connection_class obj = new connection_class(listener.accept(),cid);
                 socket_queue.add(obj);
-                cid +=1;
-                //System.out.println("will you add socket to the queue");
-                
-                //System.out.println("The connection class is added to the queue");
-                
-                /*
-                System.out.println("accepted the connection \n");
-                din  = new DataInputStream(socket.getInputStream());  
-                dout = new DataOutputStream(socket.getOutputStream());
-                //System.out.println("Trying to read the data ");
-                byte[] b = new byte[8];
-                //new Random().nextBytes(b);
-                //boolean check = true;
-                                
-                din.read(b);
-                
-                //print_bytes(b);
-                */                     
-                
-                
+                NoClients+=1;
+                cid +=1;             
                 
             }
 
