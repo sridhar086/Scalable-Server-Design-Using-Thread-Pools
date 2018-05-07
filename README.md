@@ -17,7 +17,7 @@ Java 1.8
 ## Components
 
 The project consists of two components
-1) Server  - The server component consists of Server, connection_class and ThreadpoolManager classes.
+1) Server  - The server component consists of Server, ConnectionClass and ThreadpoolManager classes.
 2) Client  - The server component consists of Client class.
 
 ### Defaults
