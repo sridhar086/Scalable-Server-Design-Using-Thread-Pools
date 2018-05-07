@@ -57,7 +57,7 @@ class Server {
     /**
      * @param args the command line arguments
      */
-    int threadcount = 10;
+    public static int threadcount = 10;
     static volatile ArrayList<Integer> active_threads = new ArrayList<Integer>();
     static volatile boolean shutdown = false;
     
@@ -76,7 +76,7 @@ class Server {
 
     //Socket initializations
     private static ServerSocket listener;
-    private static final LinkedList<connection_class> socket_queue = new LinkedList<connection_class>();
+    private static final LinkedList<ConnectionClass> socket_queue = new LinkedList<ConnectionClass>();
     
 
     public synchronized static void update_params(int y, int clientid)
@@ -189,9 +189,9 @@ class Server {
     }
     
     
-    public synchronized static connection_class queue_poll()
+    public synchronized static ConnectionClass queue_poll()
     {    
-        connection_class obj = null;
+        ConnectionClass obj = null;
         try{
             //System.out.println("size of linkedlist is " + socket_queue.size());
             if (socket_queue.size() != 0)
@@ -210,7 +210,7 @@ class Server {
         }
     }
     
-    public synchronized static void queue_add(connection_class con)
+    public synchronized static void queue_add(ConnectionClass con)
     {      
         socket_queue.add(con);
         //System.out.println("added socket back to queue");        
@@ -251,7 +251,7 @@ class Server {
     static DataInputStream din = null;
     static DataOutputStream dout = null;
     
-    public static void start_server() {
+    public static void Server(String[] args) {
         // TODO code application logic here
         /*
         System.out.println("Creating threads");
@@ -282,9 +282,13 @@ class Server {
                     }                   
                 }
             }).start();
+            if (args.length > 0)
+            {
+                portNumber = Integer.parseInt(args[0]);
+                threadcount = Integer.parseInt(args[1]);
+            }
             
-            
-            ThreadpoolManager th = new ThreadpoolManager(10);
+            ThreadpoolManager th = new ThreadpoolManager(threadcount);
             System.out.println("Listening on the server\n");
             listener = new ServerSocket(portNumber);
             int cid = 1 ;
@@ -293,7 +297,7 @@ class Server {
                 //System.out.println("Waiting for a connection\n");
                 //Socket socket = listener.accept();
                 
-                connection_class obj = new connection_class(listener.accept(),cid);
+                ConnectionClass obj = new ConnectionClass(listener.accept(),cid);
                 socket_queue.add(obj);
                 NoClients+=1;
                 cid +=1;             

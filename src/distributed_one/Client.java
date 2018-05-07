@@ -57,11 +57,20 @@ class Client {
     
     
     
-    public void start_client(String client_name)
+    public void Client(String[] args)
     {        
+        
         String server_host = "127.0.0.1";
         int server_port = 9091;
         int message_rate = 1;
+        String client_name = args[0];
+        if (args.length > 1)
+        {
+            server_host = args[1];
+            server_port = Integer.parseInt(args[2]);
+            message_rate = Integer.parseInt(args[3]);
+        }
+        
         try
         {
             socket = new Socket(server_host, server_port);
@@ -89,7 +98,7 @@ class Client {
             //System.out.println("read the data from server"+hashcode+" the original is "+orig_hashcodes);
             if (orig_hashcodes.equalsIgnoreCase(hashcode))
             {
-                //System.out.println("Hashcodes matches for "+client_name);
+                System.out.println("Hashcodes matches for "+client_name);
                 //System.out.println("hashcodes matches "+hashcode+" "+orig_hashcodes);
             }
             Thread.sleep(1000/message_rate);

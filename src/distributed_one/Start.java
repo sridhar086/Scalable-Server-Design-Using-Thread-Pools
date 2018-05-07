@@ -22,7 +22,8 @@ public class Start {
 
             @Override
             public void run() {
-                Server.start_server();
+                String[] arg={};
+                Server.Server(arg);
                 
             }
         }).start();
@@ -37,8 +38,9 @@ public class Start {
 
             @Override
             public void run() {
-                Client c = new Client();
-                c.start_client("client1");
+                Client c = new Client();   
+                String[] arg = {"client1"};
+                c.Client(arg);
                 
             }
         }).start();
@@ -48,8 +50,9 @@ public class Start {
 
             @Override
             public void run() {
-                                Client d = new Client();
-                d.start_client("client2");
+                Client d = new Client();
+                String[] arg = {"client2"};
+                d.Client(arg);
                 //Client.start_client("client2");
                 
             }
@@ -60,8 +63,9 @@ public class Start {
 
             @Override
             public void run() {
-                                Client e = new Client();
-                e.start_client("client3");
+                Client e = new Client();
+                String[] arg = {"client3"};
+                e.Client(arg);
                 //Client.start_client("client2");
                 
             }

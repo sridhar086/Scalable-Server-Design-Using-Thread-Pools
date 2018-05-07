@@ -49,14 +49,14 @@ class Threadpool extends Thread implements Runnable
             while(!full_shutdown)
             {
 
-                connection_class obj = Server.queue_poll();
+                ConnectionClass obj = Server.queue_poll();
                 if (obj!=null)
                 {
                 byte[] b = new byte[8];
                 obj.din.read(b);
                 obj.dout.writeUTF(Threadpool.SHA1FromBytes(b));
                 Server.queue_add(obj);  
-                //System.out.println("Processed by Thread ID: "+getId()+" for Client ID: "+obj.clientid);
+                System.out.println("Processed by Thread ID: "+getId()+" for Client ID: "+obj.clientid);
                 Server.update_params(0,obj.clientid);
                 
                 }

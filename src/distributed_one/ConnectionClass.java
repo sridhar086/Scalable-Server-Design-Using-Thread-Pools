@@ -17,7 +17,7 @@ import java.net.Socket;
  *
  * @author sridhar
  */
-    public class connection_class
+    public class ConnectionClass
     {
         public DataInputStream din;
         public DataOutputStream dout;
@@ -26,7 +26,7 @@ import java.net.Socket;
         //public PrintWriter out;
         
         
-        connection_class(Socket soc,int clientid)
+        ConnectionClass(Socket soc,int clientid)
         {
             try {
                 this.din  = new DataInputStream((soc.getInputStream()));
