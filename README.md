@@ -45,7 +45,7 @@ java Server 9091 10
 java Client mycomputer 123.123.123.123 9091 2
 ```
 
-##What I learnt ?
+## What I learnt ?
 I learnt lot of miniscule things that I didn't notice in my programming style. One of the mentionable things that I learnt is - polling for an object from a queue protected by a lock. This eases the sharing capability between threads.
 
 ## Authors
